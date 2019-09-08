@@ -112,7 +112,7 @@ public class PixelTerrainGenerator : MonoBehaviour
 		{
 			var texture = new Texture2D (Width, Height, TextureFormat.ARGB32, false);
 			texture.filterMode = FilterMode.Point;
-			texture.alphaIsTransparency = true;
+			// texture.alphaIsTransparency = true;
 
 			// Debug.Log ($"Generating Texture, {Width} x {Height}");
 
@@ -165,7 +165,7 @@ public class PixelTerrainGenerator : MonoBehaviour
 
 	private void OnValidate()
 	{
-		Start ();
+		// Start ();
 	}
 
 }
