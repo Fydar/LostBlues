@@ -4,8 +4,12 @@
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
+	public static CameraController Instance;
+
 	public float CameraWidth = 8;
 	public float CameraHeight = 2;
+
+	public Vector2 VirtualPositon;
 
 	public Rect CameraBounds;
 
@@ -15,7 +19,10 @@ public class CameraController : MonoBehaviour
 
 	private void Awake()
 	{
+		Instance = this;
 		ThisCamera = GetComponent<Camera> ();
+
+		VirtualPositon = transform.position;
 	}
 
 	private void Update ()
@@ -33,17 +40,31 @@ public class CameraController : MonoBehaviour
 			innerBoundsWidth,
 			innerBoundsHeight);
 
-		transform.position = new Vector3 (
-			Mathf.Clamp(transform.position.x, InnerBounds.xMin, InnerBounds.xMax),
-			Mathf.Clamp(transform.position.y, InnerBounds.yMin, InnerBounds.yMax),
+		VirtualPositon = new Vector3 (
+			Mathf.Clamp(VirtualPositon.x, InnerBounds.xMin, InnerBounds.xMax),
+			Mathf.Clamp(VirtualPositon.y, InnerBounds.yMin, InnerBounds.yMax),
 			0);
+
+
+		var totalOffset = Vector2.zero;
+		if (PulseEffect.Instances != null)
+		{
+			foreach (var pulseEffect in PulseEffect.Instances.Values)
+			{
+				totalOffset += pulseEffect.ShakeOffset;
+			}
+		}
+
+
+		var newPosition = VirtualPositon + totalOffset;
+
+		transform.position = new Vector3(newPosition.x, newPosition.y, -10);
 	}
 
 	public void SetNormalisedPosition (float x, float y)
 	{
-		transform.position = new Vector3 (
+		VirtualPositon = new Vector2 (
 			Mathf.Lerp(InnerBounds.xMin, InnerBounds.xMax, x),
-			Mathf.Lerp (InnerBounds.yMin, InnerBounds.yMax, y),
-			0);
+			Mathf.Lerp (InnerBounds.yMin, InnerBounds.yMax, y));
 	}
 }
