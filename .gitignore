@@ -27,10 +27,13 @@ ExportedObj/
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
 
-Nature/*.sln
-Nature/*.csproj
-Nature/[Ll]ibrary/
-Nature/Assets/AssetStoreTools*
+src/LostBluesUnity/*.sln
+src/LostBluesUnity/*.csproj
+src/LostBluesUnity/[Ll]ibrary/
+src/LostBluesUnity/Assets/AssetStoreTools*
+src/LostBluesUnity/Logs
+src/LostBluesUnity/UserSettings
+
 
 # Builds
 *.apk
