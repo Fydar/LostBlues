@@ -23,11 +23,6 @@ public class KelpGenerator : MonoBehaviour
 		GrowthUpdate ();
 	}
 
-	private void OnValidate()
-	{
-		GrowthUpdate ();
-	}
-
 	private void GrowthTick()
 	{
 		Age += GrowthCurve.Evaluate(Age / MaxAge) * GrowthAmount;
