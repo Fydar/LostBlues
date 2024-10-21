@@ -20433,7 +20433,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 0d56a31e61d282d498c6c1d319917741, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30644,7 +30643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraWidth: 10.062222
   CameraHeight: 5.66
-  VirtualPositon: {x: 0, y: -4.34}
+  VirtualPosition: {x: 0, y: 0}
   CameraBounds:
     serializedVersion: 2
     x: -10
@@ -30717,7 +30716,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.34, z: -10}
+  m_LocalPosition: {x: -0.04497136, y: -0.04497136, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31032,7 +31031,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 0d56a31e61d282d498c6c1d319917741, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -36284,7 +36282,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -41508,7 +41506,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 13aa50231a40c8b46a9b290a7caebd16, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -52534,7 +52531,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   PlayOnStart: 1
-  StartIntencity: 5
+  StartIntensity: 0
 --- !u!1 &1480581356
 GameObject:
   m_ObjectHideFlags: 0
@@ -63463,7 +63460,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

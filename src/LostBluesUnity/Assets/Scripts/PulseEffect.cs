@@ -60,6 +60,8 @@ namespace LostBluesUnity
 
             foreach (var source in Audio)
             {
+                float panPercent = Mathf.InverseLerp(CameraController.Instance.CameraBounds.xMin, CameraController.Instance.CameraBounds.xMax, positon.x);
+                source.panStereo = ((panPercent * 2) -1) * 0.65f;
                 source.PlayOneShot(source.clip);
             }
 
