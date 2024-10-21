@@ -45,8 +45,8 @@ public class Fish : MonoBehaviour
 		}
 
 		transform.position = new Vector3 (
-			Mathf.Clamp (transform.position.x, CameraController.Instance.CameraBounds.xMin, CameraController.Instance.CameraBounds.xMax),
-			Mathf.Clamp (transform.position.y, CameraController.Instance.CameraBounds.yMin, CameraController.Instance.CameraBounds.yMax),
+			Mathf.Clamp (transform.position.x, CameraController.Instance.CameraBounds.xMin - 0.3f, CameraController.Instance.CameraBounds.xMax + 0.3f),
+			Mathf.Clamp (transform.position.y, CameraController.Instance.CameraBounds.yMin + 1.8f, CameraController.Instance.CameraBounds.yMax),
 			transform.position.z);
 
 	}
