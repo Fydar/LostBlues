@@ -1,95 +1,87 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class StoreUpgrade : MonoBehaviour
+namespace LostBluesUnity
 {
-	public static StoreUpgrade Instance;
+    public class StoreUpgrade : MonoBehaviour
+    {
+        [Serializable]
+        public struct Levels
+        {
+            public int NextCost;
+            public int Damage;
+        }
 
-	[System.Serializable]
-	public struct Levels
-	{
-		public int NextCost;
-		public int Damage;
-	}
+        public static StoreUpgrade Instance;
 
-	public int CurrentLevel;
+        public int CurrentLevel;
 
-	[Header ("General")]
-	public Levels[] Upgrades;
+        [Header("General")]
+        public Levels[] Upgrades;
 
-	[Header ("Setup")]
-	public Graphic[] SelectedTinted;
-	public Graphic[] AfforadbleTinted;
-	public GameObject[] Hides;
-	public GameObject[] Shows;
-	public Text CostText;
-	public Image Fill;
+        [Header("Setup")]
+        public Graphic[] SelectedTinted;
+        public Graphic[] AfforadbleTinted;
+        public GameObject[] Hides;
+        public GameObject[] Shows;
+        public Text CostText;
+        public Image Fill;
 
-	[Space]
-	public Color DeselectColor;
-	public Color SelectColor;
+        [Space]
+        public Color DeselectColor;
+        public Color SelectColor;
 
-	public bool IsAtMaxLevel
-	{
-		get
-		{
-			return CurrentLevel == Upgrades.Length - 1;
-		}
-	}
+        public bool IsAtMaxLevel => CurrentLevel == Upgrades.Length - 1;
 
-	public int CurrentDamage
-	{
-		get
-		{
-			return Upgrades[CurrentLevel].Damage;
-		}
-	}
+        public int CurrentDamage => Upgrades[CurrentLevel].Damage;
 
-	private void Awake()
-	{
-		Instance = this;
-	}
+        private void Awake()
+        {
+            Instance = this;
+        }
 
-	private void Update()
-	{
-		if (!IsAtMaxLevel)
-		{
-			if (CostText != null)
-			{
-				CostText.text = Upgrades[CurrentLevel].NextCost.ToString ();
-			}
-		}
+        private void Update()
+        {
+            if (!IsAtMaxLevel)
+            {
+                if (CostText != null)
+                {
+                    CostText.text = Upgrades[CurrentLevel].NextCost.ToString();
+                }
+            }
 
-		foreach (var item in Hides)
-		{
-			item.SetActive (!IsAtMaxLevel);
-		}
-		foreach (var item in Shows)
-		{
-			item.SetActive (IsAtMaxLevel);
-		}
+            foreach (var item in Hides)
+            {
+                item.SetActive(!IsAtMaxLevel);
+            }
+            foreach (var item in Shows)
+            {
+                item.SetActive(IsAtMaxLevel);
+            }
 
-		bool affordable = IsAtMaxLevel || Game.Instance.Currency.Value >= Upgrades[CurrentLevel].NextCost;
-		foreach (var affordableTint in AfforadbleTinted)
-		{
-			affordableTint.color = affordable ? SelectColor : DeselectColor;
-		}
-	}
+            bool affordable = IsAtMaxLevel || Game.Instance.Currency.Value >= Upgrades[CurrentLevel].NextCost;
+            foreach (var affordableTint in AfforadbleTinted)
+            {
+                affordableTint.color = affordable ? SelectColor : DeselectColor;
+            }
+        }
 
-	public void UiClick ()
-	{
-		if (IsAtMaxLevel)
-		{
-			return;
-		}
-		bool affordable = Game.Instance.Currency.Value >= Upgrades[CurrentLevel].NextCost;
+        public void UiClick()
+        {
+            if (IsAtMaxLevel)
+            {
+                return;
+            }
+            bool affordable = Game.Instance.Currency.Value >= Upgrades[CurrentLevel].NextCost;
 
-		if (affordable)
-		{
-			Game.Instance.Currency.Value -= Upgrades[CurrentLevel].NextCost;
-			CurrentLevel++;
+            if (affordable)
+            {
+                Game.Instance.Currency.Value -= Upgrades[CurrentLevel].NextCost;
+                CurrentLevel++;
 
-			Fill.fillAmount = ((float)CurrentLevel) / (Upgrades.Length - 1);
-		}
-	}
+                Fill.fillAmount = ((float)CurrentLevel) / (Upgrades.Length - 1);
+            }
+        }
+    }
 }

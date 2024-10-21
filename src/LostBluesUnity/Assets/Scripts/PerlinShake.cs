@@ -1,56 +1,59 @@
 using UnityEngine;
 
-public class PerlinShake : MonoBehaviour
+namespace LostBluesUnity
 {
-	public float duration = 0.5f;
-	public float speed = 1.0f;
-	public float magnitude = 0.1f;
+    public class PerlinShake : MonoBehaviour
+    {
+        public float duration = 0.5f;
+        public float speed = 1.0f;
+        public float magnitude = 0.1f;
 
-	public AnimationCurve falloff;
-	
-	private float elapsed;
-	private float intencity;
+        public AnimationCurve falloff;
 
-	public bool PlayOnStart;
-	public float StartIntencity;
+        private float elapsed;
+        private float intensity;
 
-	private void Awake ()
-	{
-		intencity = 0.0f;
-		elapsed = 1000000;
-	}
+        public bool PlayOnStart;
+        public float StartIntensity;
 
-	private void Start()
-	{
-		if (PlayOnStart)
-		{
-			PlayShake (StartIntencity);
-		}
-	}
+        private void Awake()
+        {
+            intensity = 0.0f;
+            elapsed = 1000000;
+        }
 
-	public void PlayShake (float _intencity)
-	{
-		intencity = _intencity;
-		elapsed = 0;
-	}
+        private void Start()
+        {
+            if (PlayOnStart)
+            {
+                PlayShake(StartIntensity);
+            }
+        }
 
-	private void Update ()
-	{
-		elapsed += Time.deltaTime;
+        public void PlayShake(float intensity)
+        {
+            this.intensity = intensity;
+            elapsed = 0;
+        }
 
-		float percentComplete = elapsed / duration;
-		percentComplete = falloff.Evaluate (percentComplete);
+        private void Update()
+        {
+            elapsed += Time.deltaTime;
 
-		float damper = 1.0f - Mathf.Clamp (2.0f * percentComplete - 1.0f, 0.0f, 1.0f);
+            float percentComplete = elapsed / duration;
+            percentComplete = falloff.Evaluate(percentComplete);
 
-		float alpha = speed * percentComplete * intencity;
+            float damper = 1.0f - Mathf.Clamp((2.0f * percentComplete) - 1.0f, 0.0f, 1.0f);
 
-		float x = Mathf.PerlinNoise (alpha, 0) * 2.0f - 1.0f;
-		float y = Mathf.PerlinNoise (0, alpha) * 2.0f - 1.0f;
+            float alpha = speed * percentComplete * intensity;
 
-		x *= magnitude * damper * intencity;
-		y *= magnitude * damper * intencity;
+            float x = (Mathf.PerlinNoise(alpha, 0) * 2.0f) - 1.0f;
+            float y = (Mathf.PerlinNoise(0, alpha) * 2.0f) - 1.0f;
 
-		transform.localPosition = new Vector3 (x, y, transform.localPosition.z);
-	}
+            x *= magnitude * damper * intensity;
+            y *= magnitude * damper * intensity;
+
+            transform.localPosition = new Vector3(x, y, transform.localPosition.z);
+        }
+    }
 }

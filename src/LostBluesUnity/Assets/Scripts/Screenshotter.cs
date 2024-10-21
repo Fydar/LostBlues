@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace MiniMinerUnity
+namespace LostBluesUnity
 {
     public class Screenshotter : MonoBehaviour
     {

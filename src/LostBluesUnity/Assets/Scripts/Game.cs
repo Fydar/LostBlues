@@ -2,142 +2,139 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Game : MonoBehaviour
+namespace LostBluesUnity
 {
-	public static Game Instance;
+    public class Game : MonoBehaviour
+    {
+        public static Game Instance;
 
-	public Camera SceneCamera;
-	public PixelTerrainGenerator Terrain;
+        public Camera SceneCamera;
+        public PixelTerrainGenerator Terrain;
 
-	[Header("Cooldown")]
-	public float CooldownDuration = 0.25f;
-	public float CooldownPercentage;
-	public Image BarFill;
+        [Header("Cooldown")]
+        public float CooldownDuration = 0.25f;
+        public float CooldownPercentage;
+        public Image BarFill;
 
-	[Header ("Currency")]
-	public float CurrentAnimateTime = 0.5f;
+        [Header("Currency")]
+        public float CurrentAnimateTime = 0.5f;
 
-	public int CurrentRenderedValue;
-	public int OldValue;
+        public int CurrentRenderedValue;
+        public int OldValue;
 
-	public Text CurrencyText;
-	public AudioSource CurrencyGainSound;
-	public EventField<int> Currency = new EventField<int> ();
-	private Coroutine AnimateUp;
+        public Text CurrencyText;
+        public AudioSource CurrencyGainSound;
+        public EventField<int> Currency = new();
+        private Coroutine AnimateUp;
 
-	public float PlaceHeight = 0.5f;
+        public float PlaceHeight = 0.5f;
 
-	public bool IsOnCooldown
-	{
-		get
-		{
-			return CooldownPercentage > 0.0f;
-		}
-	}
+        public bool IsOnCooldown => CooldownPercentage > 0.0f;
 
-	private void Awake()
-	{
-		Instance = this;
+        private void Awake()
+        {
+            Instance = this;
 
-		Currency.onChanged += () =>
-		{
-			if (AnimateUp != null)
-			{
-				StopCoroutine (AnimateUp);
-			}
-			OldValue = CurrentRenderedValue;
-			AnimateUp = StartCoroutine (AnimateUpCoroutine());
-		};
-	}
+            Currency.onChanged += () =>
+            {
+                if (AnimateUp != null)
+                {
+                    StopCoroutine(AnimateUp);
+                }
+                OldValue = CurrentRenderedValue;
+                AnimateUp = StartCoroutine(AnimateUpCoroutine());
+            };
+        }
 
-	IEnumerator AnimateUpCoroutine()
-	{
-		foreach (var time in new TimedLoop(CurrentAnimateTime))
-		{
-			int nextValue = (int)Mathf.Lerp (OldValue, Currency.Value, time);
+        private IEnumerator AnimateUpCoroutine()
+        {
+            foreach (float time in new TimedLoop(CurrentAnimateTime))
+            {
+                int nextValue = (int)Mathf.Lerp(OldValue, Currency.Value, time);
 
-			if (CurrentRenderedValue != nextValue)
-			{
-				CurrencyText.text = CurrentRenderedValue.ToString ();
+                if (CurrentRenderedValue != nextValue)
+                {
+                    CurrencyText.text = CurrentRenderedValue.ToString();
 
-				if (nextValue > CurrentRenderedValue)
-				{
-					CurrencyGainSound.Play ();
-				}
-				CurrentRenderedValue = nextValue;
-			}
-			yield return null;
-		}
-		CurrencyText.text = Currency.Value.ToString ();
-	}
+                    if (nextValue > CurrentRenderedValue)
+                    {
+                        CurrencyGainSound.Play();
+                    }
+                    CurrentRenderedValue = nextValue;
+                }
+                yield return null;
+            }
+            CurrencyText.text = Currency.Value.ToString();
+        }
 
-	private void Update ()
-	{
-		if (CooldownPercentage > 0.0f)
-		{
-			CooldownPercentage -= Time.deltaTime / CooldownDuration;
-			BarFill.fillAmount = 1.0f - CooldownPercentage;
-		}
-	}
+        private void Update()
+        {
+            if (CooldownPercentage > 0.0f)
+            {
+                CooldownPercentage -= Time.deltaTime / CooldownDuration;
+                BarFill.fillAmount = 1.0f - CooldownPercentage;
+            }
+        }
 
-	public void UiClickAnywhere ()
-	{
-		var ray = SceneCamera.ScreenPointToRay (Input.mousePosition);
+        public void UiClickAnywhere()
+        {
+            var ray = SceneCamera.ScreenPointToRay(Input.mousePosition);
 
-		var scenePoint = ray.origin + (ray.direction * 10);
+            var scenePoint = ray.origin + (ray.direction * 10);
 
-		var cast = Physics2D.CircleCast (ray.origin, 0.1f, Vector2.zero);
+            var cast = Physics2D.CircleCast(ray.origin, 0.1f, Vector2.zero);
 
-		if (StoreItem.CurrentlySelected != null)
-		{
-			if (StoreItem.CurrentlySelected.InisideTerrain)
-			{
-				if (cast.transform != null && cast.transform.name == "FloorCollider")
-				{
-					PulseEffect.Instances["PlaceBubbles"].PlayAt (scenePoint);
+            if (StoreItem.CurrentlySelected != null)
+            {
+                if (StoreItem.CurrentlySelected.InisideTerrain)
+                {
+                    if (cast.transform != null && cast.transform.name == "FloorCollider")
+                    {
+                        PulseEffect.Instances["PlaceBubbles"].PlayAt(scenePoint);
 
-					var clone = Instantiate (StoreItem.CurrentlySelected.Prefab[Random.Range(0, StoreItem.CurrentlySelected.Prefab.Length)]);
+                        var clone = Instantiate(StoreItem.CurrentlySelected.Prefab[Random.Range(0, StoreItem.CurrentlySelected.Prefab.Length)]);
 
-					clone.transform.position = new Vector3 (scenePoint.x, PlaceHeight, 10);
+                        clone.transform.position = new Vector3(scenePoint.x, PlaceHeight, 10);
 
-					Currency.Value -= StoreItem.CurrentlySelected.CostAmount;
-					return;
-				}
-			}
-			else
-			{
-				PulseEffect.Instances["PlaceBubbles"].PlayAt (scenePoint);
+                        Currency.Value -= StoreItem.CurrentlySelected.CostAmount;
+                        return;
+                    }
+                }
+                else
+                {
+                    PulseEffect.Instances["PlaceBubbles"].PlayAt(scenePoint);
 
-				var clone = Instantiate (StoreItem.CurrentlySelected.Prefab[Random.Range (0, StoreItem.CurrentlySelected.Prefab.Length)]);
+                    var clone = Instantiate(StoreItem.CurrentlySelected.Prefab[Random.Range(0, StoreItem.CurrentlySelected.Prefab.Length)]);
 
-				clone.transform.position = new Vector3 (scenePoint.x, scenePoint.y, 10);
+                    clone.transform.position = new Vector3(scenePoint.x, scenePoint.y, 10);
 
-				Currency.Value -= StoreItem.CurrentlySelected.CostAmount;
-				return;
-			}
+                    Currency.Value -= StoreItem.CurrentlySelected.CostAmount;
+                    return;
+                }
 
-			StoreItem.CurrentlySelected.Deselect ();
-		}
+                StoreItem.CurrentlySelected.Deselect();
+            }
 
-		if (IsOnCooldown)
-		{
-			return;
-		}
+            if (IsOnCooldown)
+            {
+                return;
+            }
 
-		CooldownPercentage = 1.0f;
+            CooldownPercentage = 1.0f;
 
-		if (cast.transform != null)
-		{
-			var segment = cast.transform.GetComponent<Segment> ();
+            if (cast.transform != null)
+            {
+                var segment = cast.transform.GetComponent<Segment>();
 
-			if (segment != null)
-			{
-				segment.CutAt ();
-				PulseEffect.Instances["CutBubbles"].PlayAt (scenePoint);
-				return;
-			}
-		}
+                if (segment != null)
+                {
+                    segment.CutAt();
+                    PulseEffect.Instances["CutBubbles"].PlayAt(scenePoint);
+                    return;
+                }
+            }
 
-		PulseEffect.Instances["CutMiss"].PlayAt (scenePoint);
-	}
+            PulseEffect.Instances["CutMiss"].PlayAt(scenePoint);
+        }
+    }
 }

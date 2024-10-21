@@ -1,12 +1,15 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
 
-public static class Reserializer
+namespace LostBluesUnity
 {
-    [MenuItem("Toolkit/Reserialize")]
-    public static void Reserialize()
+    public static class Reserializer
     {
-        AssetDatabase.ForceReserializeAssets();
+        [MenuItem("Toolkit/Reserialize")]
+        public static void Reserialize()
+        {
+            AssetDatabase.ForceReserializeAssets();
+        }
     }
 }
 #endif
