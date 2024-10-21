@@ -3,7 +3,7 @@
 Lost Blues
 </h1>
 
-[![Play now button](https://img.shields.io/badge/▶%20Play%20Now-b342f5.svg?logo=play)](https://fydar.dev/play/lostblues) [![Unity Version: 2023.2.20f1](https://img.shields.io/badge/Made%20with%20Unity-2023.2.20f1-333333.svg?logo=unity)](https://unity.com/releases/editor/archive)\
+[![Play now button](https://img.shields.io/badge/▶%20Play%20Now-b342f5.svg?logo=play)](https://fydar.dev/play/lostblues) [![Unity Version: 6.0.23f1](https://img.shields.io/badge/Made%20with%20Unity-6.0.23f1-333333.svg?logo=unity)](https://unity.com/releases/editor/whats-new/6000.0.23)\
 [![Mini-jam](https://img.shields.io/badge/Mini%20Jam%2036-6d3c35.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAWAgMAAAC0xPTvAAAADFBMVEUAAAD6/f//Pm7/1GmO5/UoAAAAAXRSTlMAQObYZgAAAE9JREFUeF5jsP///w/D9////zP8BwII14GBgZGBJTRUAMLyYGBQZPBatWohlIhaikx4Ri1NhEosjQISK7MWIil2WrWqkUGAgYGFgTU0NAAA9KQpwKHaYYgAAAAASUVORK5CYII=)](https://itch.io/jam/mini-jam-36-nature/rate/480916) [![YouTube](https://img.shields.io/badge/Gameplay%20Video-ee0000.svg?logo=youtube)](https://youtu.be/N0eWZrliNG4)
 
 Restore life to the oceans.
